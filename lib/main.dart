@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'pages/home_page.dart';
+import 'package:trilhaapp/pages/login_page.dart';
+// import 'pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
-      home: const HomePage(title: 'Trilha App'),
+      home: const LoginPage(title: 'Trilha App'),
     );
   }
 }
