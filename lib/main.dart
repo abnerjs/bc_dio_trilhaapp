@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trilhaapp/pages/home/home_main.dart';
 import 'package:trilhaapp/pages/login.dart';
+import 'package:trilhaapp/pages/profile/profile_main.dart';
 // import 'pages/home_page.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       home: const LoginPage(title: 'TrilhaApp'),
       routes: <String, WidgetBuilder>{
         '/home': (context) => const HomePageMain(title: 'TrilhaApp'),
+        '/profile': (context) => const ProfilePageMain(title: 'Perfil'),
       },
     );
   }

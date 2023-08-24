@@ -5,9 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 class MenuPage extends StatelessWidget {
   final MenuItem currentItem;
   final ValueChanged<MenuItem> onSelectedItem;
+  final BuildContext context;
 
   const MenuPage(
-      {Key? key, required this.currentItem, required this.onSelectedItem})
+      {Key? key,
+      required this.currentItem,
+      required this.onSelectedItem,
+      required this.context})
       : super(key: key);
 
   @override
@@ -59,7 +63,7 @@ class MenuPage extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.pushReplacementNamed(context, '/');
                 },
               ),
             ),
@@ -85,18 +89,23 @@ class MenuPage extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            onSelectedItem(item);
+            Navigator.pushNamed(context, item.url);
+          },
         ),
       );
 }
 
 class MenuItems {
-  static const home =
-      MenuItem(title: 'Início', icon: FluentIcons.home_16_regular);
-  static const perfil =
-      MenuItem(title: 'Perfil', icon: FluentIcons.person_16_regular);
-  static const config =
-      MenuItem(title: 'Configurações', icon: FluentIcons.settings_16_regular);
+  static const home = MenuItem(
+      title: 'Início', icon: FluentIcons.home_16_regular, url: '/home');
+  static const perfil = MenuItem(
+      title: 'Perfil', icon: FluentIcons.person_16_regular, url: '/profile');
+  static const config = MenuItem(
+      title: 'Configurações',
+      icon: FluentIcons.settings_16_regular,
+      url: '/home');
 
   static const all = <MenuItem>[
     home,
@@ -108,6 +117,7 @@ class MenuItems {
 class MenuItem {
   final String title;
   final IconData icon;
+  final String url;
 
-  const MenuItem({required this.title, required this.icon});
+  const MenuItem({required this.title, required this.icon, required this.url});
 }

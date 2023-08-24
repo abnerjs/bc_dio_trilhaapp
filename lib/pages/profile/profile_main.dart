@@ -3,17 +3,17 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:trilhaapp/pages/home/home.dart';
 import 'package:trilhaapp/pages/menu.dart';
 
-class HomePageMain extends StatefulWidget {
-  const HomePageMain({super.key, required this.title});
+class ProfilePageMain extends StatefulWidget {
+  const ProfilePageMain({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomePageMain> createState() => _HomePageMainState();
+  State<ProfilePageMain> createState() => _ProfilePageMainState();
 }
 
-class _HomePageMainState extends State<HomePageMain> {
-  MenuItem currentItem = MenuItems.home;
+class _ProfilePageMainState extends State<ProfilePageMain> {
+  MenuItem currentItem = MenuItems.perfil;
 
   @override
   Widget build(BuildContext context) => ZoomDrawer(
@@ -34,7 +34,7 @@ class _HomePageMainState extends State<HomePageMain> {
               });
             }),
         mainScreen: const HomePage(
-          title: "TrilhaApp",
+          title: "Perfil",
         ),
       );
 }
