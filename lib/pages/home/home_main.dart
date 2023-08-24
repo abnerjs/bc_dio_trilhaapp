@@ -13,18 +13,26 @@ class HomePageMain extends StatefulWidget {
 }
 
 class _HomePageMainState extends State<HomePageMain> {
+  MenuItem currentItem = MenuItems.home;
+
   @override
-  Widget build(BuildContext context) => const ZoomDrawer(
+  Widget build(BuildContext context) => ZoomDrawer(
         menuBackgroundColor: Colors.deepPurple,
         menuScreenWidth: double.infinity,
         mainScreenTapClose: true,
         angle: 0,
         style: DrawerStyle.defaultStyle,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: Colors.white38, blurRadius: 1),
         ],
-        menuScreen: MenuPage(),
-        mainScreen: HomePage(
+        menuScreen: MenuPage(
+            currentItem: currentItem,
+            onSelectedItem: (item) {
+              setState(() {
+                currentItem = item;
+              });
+            }),
+        mainScreen: const HomePage(
           title: "TrilhaApp",
         ),
       );

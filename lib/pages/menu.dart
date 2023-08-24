@@ -2,14 +2,14 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+class MenuPage extends StatelessWidget {
+  final MenuItem currentItem;
+  final ValueChanged<MenuItem> onSelectedItem;
 
-  @override
-  State<MenuPage> createState() => _MenuPageState();
-}
+  const MenuPage(
+      {Key? key, required this.currentItem, required this.onSelectedItem})
+      : super(key: key);
 
-class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: Colors.deepPurple,
@@ -66,25 +66,29 @@ class _MenuPageState extends State<MenuPage> {
           ],
         ),
       ));
-}
 
-Widget buildMenuItem(MenuItem item) => ListTile(
-      minLeadingWidth: 20,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 40),
-      leading: Icon(
-        item.icon,
-        color: Colors.white,
-        size: 24,
-      ),
-      title: Text(
-        item.title,
-        style: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 18,
+  Widget buildMenuItem(MenuItem item) => ListTileTheme(
+        selectedColor: Colors.white,
+        iconColor: const Color.fromARGB(255, 140, 140, 140),
+        textColor: const Color.fromARGB(255, 160, 160, 160),
+        child: ListTile(
+          selected: currentItem == item,
+          minLeadingWidth: 20,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 40),
+          leading: Icon(
+            item.icon,
+            size: 24,
+          ),
+          title: Text(
+            item.title,
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+            ),
+          ),
+          onTap: () {},
         ),
-      ),
-      onTap: () {},
-    );
+      );
+}
 
 class MenuItems {
   static const home =
