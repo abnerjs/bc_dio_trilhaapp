@@ -11,7 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var num = 0;
+  bool isPasswordVisible = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                     margin:
                         const EdgeInsets.only(bottom: 40, top: 100, left: 40),
                     child: Text(
-                      "TrilhaApp",
+                      widget.title,
                       style: GoogleFonts.poppins(
                         color: const Color.fromARGB(255, 0, 0, 0),
                         fontWeight: FontWeight.w400,
@@ -73,9 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(8),
                       color: const Color.fromARGB(255, 240, 240, 240),
                     ),
-                    child: const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
                         filled: true,
                         fillColor: Color.fromARGB(255, 240, 240, 240),
                         labelText: 'Email',
@@ -91,20 +93,46 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(8),
                       color: const Color.fromARGB(255, 240, 240, 240),
                     ),
-                    child: const TextField(
-                      obscureText: true,
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: !isPasswordVisible,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color.fromARGB(255, 240, 240, 240),
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
                         labelText: 'Senha',
                         border: InputBorder.none,
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                          child: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: const Color.fromARGB(255, 170, 170, 170),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 40),
                     child: TextButton(
-                        onPressed: () => {},
+                        onPressed: () {
+                          if (emailController.text == "admin" &&
+                              passwordController.text == "admin") {
+                            Navigator.pushReplacementNamed(context, '/home');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.deepPurple,
+                                content: Text('Usuário ou senha inválidos'),
+                              ),
+                            );
+                          }
+                        },
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(

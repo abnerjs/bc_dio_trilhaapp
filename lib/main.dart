@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/pages/login_page.dart';
+import 'package:trilhaapp/pages/home.dart';
+import 'package:trilhaapp/pages/login.dart';
 // import 'pages/home_page.dart';
 
 void main() {
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
-      home: const LoginPage(title: 'Trilha App'),
+      home: const LoginPage(title: 'TrilhaApp'),
+      routes: <String, WidgetBuilder>{
+        '/home': (context) => const HomePage(title: 'TrilhaApp'),
+      },
     );
   }
 }
