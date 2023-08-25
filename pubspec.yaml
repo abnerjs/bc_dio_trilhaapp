@@ -39,6 +39,7 @@ dependencies:
   flutter_zoom_drawer: ^3.1.1
   get: ^4.6.5
   fluentui_system_icons: ^1.1.210
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:trilhaapp/pages/home/home.dart';
 import 'package:trilhaapp/pages/menu.dart';
+import 'package:trilhaapp/pages/profile/profile.dart';
 
 class ProfilePageMain extends StatefulWidget {
   const ProfilePageMain({super.key, required this.title});
@@ -33,7 +33,7 @@ class _ProfilePageMainState extends State<ProfilePageMain> {
                 currentItem = item;
               });
             }),
-        mainScreen: const HomePage(
+        mainScreen: const ProfilePage(
           title: "Perfil",
         ),
       );

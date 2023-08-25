@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/pages/menu_widget.dart';
+import 'package:trilhaapp/widgets/menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
