@@ -8,3 +8,4 @@ Um projeto feito em Flutter para o bootcamp da DIO.
 
 ## Prints
 ![print1](/assets/sshot.png)
+![print1](/assets/menu.gif)
