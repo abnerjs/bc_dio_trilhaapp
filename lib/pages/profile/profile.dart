@@ -22,15 +22,13 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           widget.title,
           style: GoogleFonts.poppins(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w900,
             fontSize: 20,
           ),
         ),
+        centerTitle: true,
         leading: const MenuWidget(),
       ),
       body: PageView(

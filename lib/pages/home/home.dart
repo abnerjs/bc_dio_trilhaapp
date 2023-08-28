@@ -17,15 +17,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           widget.title,
           style: GoogleFonts.montserrat(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w900,
             fontSize: 20,
           ),
         ),
+        centerTitle: true,
         leading: const MenuWidget(),
       ),
     );

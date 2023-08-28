@@ -33,8 +33,8 @@ class _HomePageMainState extends State<HomePageMain> {
                 currentItem = item;
               });
             }),
-        mainScreen: const HomePage(
-          title: "TrilhaApp",
+        mainScreen: HomePage(
+          title: widget.title,
         ),
       );
 }

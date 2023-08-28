@@ -33,8 +33,8 @@ class _ProfilePageMainState extends State<ProfilePageMain> {
                 currentItem = item;
               });
             }),
-        mainScreen: const ProfilePage(
-          title: "Perfil",
+        mainScreen: ProfilePage(
+          title: widget.title,
         ),
       );
 }

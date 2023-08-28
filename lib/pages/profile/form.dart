@@ -54,6 +54,10 @@ class _FormProfileState extends State<FormProfile> {
                         filled: true,
                         fillColor: const Color.fromARGB(255, 240, 240, 240),
                         labelText: 'Nome',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(8),
@@ -74,6 +78,10 @@ class _FormProfileState extends State<FormProfile> {
                       validator: dateController.validator,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -195,7 +203,7 @@ class _FormProfileState extends State<FormProfile> {
                         maxChildSize: 1,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 240, 240, 240),
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         searchable: true,
                         buttonText: const Text("Tecnologias"),

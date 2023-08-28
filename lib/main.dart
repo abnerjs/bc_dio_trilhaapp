@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple),
       home: const LoginPage(title: 'TrilhaApp'),
       routes: <String, WidgetBuilder>{
-        '/home': (context) => const HomePageMain(title: 'TrilhaApp'),
+        '/home': (context) => const HomePageMain(title: 'Olá, Abner!'),
         '/profile': (context) => const ProfilePageMain(title: 'Perfil'),
       },
     );
