@@ -43,5 +43,5 @@ class TecnologiaRepository {
         "Swift",
         "TypeScript",
         "Visual Basic",
-      ]..sort();
+      ];
 }

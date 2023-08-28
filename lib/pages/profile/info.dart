@@ -100,29 +100,6 @@ class _InfoState extends State<Info> {
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: const Text(
-                    'Tempo de experência: ',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text(
-                    '0 a 2 anos',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text(
                     'Tecnologias: ',
                     style: TextStyle(
                       fontSize: 18,
