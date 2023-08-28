@@ -23,17 +23,17 @@ class _FormProfileState extends State<FormProfile> {
   var nomeController = TextEditingController(text: "");
   DateTime? dataNascimento;
   var dateController = dateMask;
-  var linguagensRepository = TecnologiaRepository();
+  var tecnologiasRepository = TecnologiaRepository();
   var niveis = [];
   var selectedOption = "";
-  var linguagens = [];
-  var linguagensSelecionadas = [];
+  var tecnologias = [];
+  var tecnologiasSelecionadas = [];
 
   @override
   void initState() {
     super.initState();
     niveis = ["Júnior", "Pleno", "Sênior"];
-    linguagens = linguagensRepository.tecnologias();
+    tecnologias = tecnologiasRepository.tecnologias();
   }
 
   @override
@@ -180,7 +180,7 @@ class _FormProfileState extends State<FormProfile> {
                         cancelText: const Text("CANCELAR"),
                         searchHint: "Pesquisar",
                         title: const Text(
-                          "   Linguagens",
+                          "   Tecnologias",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -198,18 +198,18 @@ class _FormProfileState extends State<FormProfile> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         searchable: true,
-                        buttonText: const Text("Linguagens"),
-                        items: linguagens
+                        buttonText: const Text("Tecnologias"),
+                        items: tecnologias
                             .map((e) => MultiSelectItem(e, e.toString()))
                             .toList(),
-                        initialValue: linguagensSelecionadas,
+                        initialValue: tecnologiasSelecionadas,
                         listType: MultiSelectListType.CHIP,
                         onConfirm: (e) => setState(() {
-                          linguagensSelecionadas = e;
+                          tecnologiasSelecionadas = e;
                         }),
                         chipDisplay: MultiSelectChipDisplay.none(),
                       ),
-                      linguagensSelecionadas.isEmpty
+                      tecnologiasSelecionadas.isEmpty
                           ? Container(
                               padding: const EdgeInsets.all(10),
                               alignment: Alignment.centerLeft,
@@ -222,7 +222,7 @@ class _FormProfileState extends State<FormProfile> {
                               margin: const EdgeInsets.only(top: 10),
                               child: Wrap(
                                 alignment: WrapAlignment.start,
-                                children: linguagensSelecionadas
+                                children: tecnologiasSelecionadas
                                     .map(
                                       (e) => Container(
                                         margin:
@@ -234,7 +234,7 @@ class _FormProfileState extends State<FormProfile> {
                                               .primaryContainer,
                                           onDelete: () {
                                             setState(() {
-                                              linguagensSelecionadas.remove(e);
+                                              tecnologiasSelecionadas.remove(e);
                                             });
                                           },
                                         ),
@@ -283,14 +283,31 @@ class _FormProfileState extends State<FormProfile> {
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          dateController.textController.text = "";
-                          dataNascimento = null;
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          widget.controller.animateToPage(
-                            0,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeInOut,
-                          );
+                          if (nomeController.text.trim().length < 3 ||
+                              dataNascimento == null ||
+                              selectedOption == "") {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Dados inválidos",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                backgroundColor: Colors.deepPurple,
+                              ),
+                            );
+                            return;
+                          } else {
+                            dateController.textController.text = "";
+                            dataNascimento = null;
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            widget.controller.animateToPage(
+                              0,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInOut,
+                            );
+                          }
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
