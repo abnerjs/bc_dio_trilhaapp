@@ -8,7 +8,7 @@ Um projeto feito em Flutter para o bootcamp da DIO.
 - O email e senha para login são `admin` e `admin`
 
 ## Prints
-![login](/assets/login.png | width=100)
-![home](/assets/home.png | width=100)
-![menu](/assets/menu.png | width=100)
-![form](/assets/form.png | width=100)
+![login](/assets/login.png =250x)
+![home](/assets/home.png =250x)
+![menu](/assets/menu.png =250x)
+![form](/assets/form.png =250x)
