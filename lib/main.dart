@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/pages/home/home_main.dart';
-import 'package:trilhaapp/pages/login.dart';
-import 'package:trilhaapp/pages/profile/profile_main.dart';
+import 'package:todoapp/pages/home/home_main.dart';
+import 'package:todoapp/pages/login.dart';
+import 'package:todoapp/pages/profile/profile_main.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: GoogleFonts.montserratTextTheme(),
           primarySwatch: Colors.deepPurple),
-      home: const LoginPage(title: 'TrilhaApp'),
+      home: const LoginPage(title: 'Noted'),
       routes: <String, WidgetBuilder>{
         '/home': (context) => const HomePageMain(title: 'Olá, Abner!'),
         '/profile': (context) => const ProfilePageMain(title: 'Perfil'),

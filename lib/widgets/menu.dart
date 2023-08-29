@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class MenuWidget extends StatefulWidget {
-  const MenuWidget({super.key});
+  final Color? color;
+
+  const MenuWidget({super.key, this.color});
 
   @override
   State<MenuWidget> createState() => _MenuWidgetState();
@@ -12,7 +14,10 @@ class MenuWidget extends StatefulWidget {
 class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) => IconButton(
-        icon: const Icon(FluentIcons.list_20_regular),
+        icon: Icon(
+          FluentIcons.list_20_regular,
+          color: widget.color ?? Colors.black,
+        ),
         onPressed: () => {
           ZoomDrawer.of(context)!.toggle(),
           FocusManager.instance.primaryFocus?.unfocus(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:trilhaapp/pages/home/home.dart';
-import 'package:trilhaapp/pages/menu.dart';
+import 'package:todoapp/pages/home/home.dart';
+import 'package:todoapp/pages/menu.dart';
 
 class HomePageMain extends StatefulWidget {
   const HomePageMain({super.key, required this.title});

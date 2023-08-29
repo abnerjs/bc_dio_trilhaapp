@@ -7,12 +7,12 @@ class MenuPage extends StatelessWidget {
   final ValueChanged<MenuItem> onSelectedItem;
   final BuildContext context;
 
-  const MenuPage(
-      {Key? key,
-      required this.currentItem,
-      required this.onSelectedItem,
-      required this.context})
-      : super(key: key);
+  const MenuPage({
+    Key? key,
+    required this.currentItem,
+    required this.onSelectedItem,
+    required this.context,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(

@@ -1,4 +1,4 @@
-## TrilhaApp
+## Todo List
 Um projeto feito em Flutter para o bootcamp da DIO.
 
 ## Como executar
@@ -9,5 +9,6 @@ Um projeto feito em Flutter para o bootcamp da DIO.
 
 ## Prints
 ![login](/assets/login.png)
+![home](/assets/home.png)
 ![menu](/assets/menu.png)
 ![form](/assets/form.png)

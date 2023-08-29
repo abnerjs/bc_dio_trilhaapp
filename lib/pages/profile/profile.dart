@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/pages/profile/form.dart';
-import 'package:trilhaapp/pages/profile/info.dart';
-import 'package:trilhaapp/widgets/menu.dart';
+import 'package:todoapp/pages/profile/form.dart';
+import 'package:todoapp/pages/profile/info.dart';
+import 'package:todoapp/widgets/menu.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.title});

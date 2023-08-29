@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "trilhaapp",
+            "name": "todoapp",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "trilhaapp (profile mode)",
+            "name": "todoapp (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "trilhaapp (release mode)",
+            "name": "todoapp (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
