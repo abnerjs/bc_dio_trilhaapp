@@ -2,6 +2,9 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todoapp/model/card_data.dart';
+import 'package:todoapp/model/task_list.dart';
+import 'package:todoapp/repository/task_list_repository.dart';
+import 'package:todoapp/utils/blended_color_pallete.dart';
 
 class CardDetail extends StatefulWidget {
   const CardDetail({super.key});
@@ -11,14 +14,20 @@ class CardDetail extends StatefulWidget {
 }
 
 class _CardDetailState extends State<CardDetail> {
+  var tasklistRepository = TaskListRepository();
+  List<Color> colors = [];
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as CardData;
+    var labelController = TextEditingController();
+    int? selectedIndex = 1;
 
     return Hero(
       tag: args.label,
       child: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -99,14 +108,129 @@ class _CardDetailState extends State<CardDetail> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Container(),
-              ],
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: ChoiceChip(
+                      label: const Text("Todos"),
+                      selected: selectedIndex == 1,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          selectedIndex = 1;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: ChoiceChip(
+                      label: const Text("Não concluídos"),
+                      selected: selectedIndex == 2,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          selectedIndex = 2;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: tasklistRepository.taskLists.length,
+                itemBuilder: (context, index) {
+                  var taskList = tasklistRepository.taskLists[index];
+                  var backgroundColor = generateBrighterMonochromaticPalette(
+                      args.colors, tasklistRepository.taskLists.length)[index];
+
+                  return noteAdded(
+                      taskList, backgroundColor, tasklistRepository);
+                },
+              ),
             ),
           ],
+        ),
+        floatingActionButton: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(16),
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: args.colors,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: args.colors[0].withOpacity(0.5),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: FloatingActionButton(
+            heroTag: null,
+            elevation: 0,
+            highlightElevation: 0,
+            focusElevation: 0,
+            onPressed: () async {
+              tasklistRepository.addTaskList(
+                TaskList('', DateTime.now(), false, false),
+              );
+              labelController.text = "";
+
+              setState(() {});
+            },
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            splashColor: Colors.transparent,
+            child: const Icon(FluentIcons.add_24_regular),
+          ),
         ),
       ),
     );
   }
+}
+
+Widget noteAdded(TaskList taskList, Color backgroundColor,
+    TaskListRepository tasklistRepository) {
+  return Dismissible(
+    key: Key(taskList.id),
+    onDismissed: (direction) {
+      tasklistRepository.removeTaskList(taskList);
+    },
+    child: Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Digite o título',
+                border: InputBorder.none,
+              ),
+              onChanged: (value) {
+                taskList.title = value;
+                tasklistRepository.updateTaskList(taskList);
+              },
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(FluentIcons.chevron_right_24_regular),
+          ),
+        ],
+      ),
+    ),
+  );
 }

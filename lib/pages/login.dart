@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
       ),
