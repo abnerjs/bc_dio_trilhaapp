@@ -16,6 +16,12 @@ class _HomePageMainState extends State<HomePageMain> {
   MenuItem currentItem = MenuItems.home;
 
   @override
+  void initState() {
+    super.initState();
+    currentItem = MenuItems.home;
+  }
+
+  @override
   Widget build(BuildContext context) => ZoomDrawer(
         menuBackgroundColor: Colors.deepPurple,
         menuScreenWidth: double.infinity,

@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:todoapp/repository/card_data.dart';
 import 'package:todoapp/widgets/menu.dart';
+
+import '../../model/card_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -13,29 +17,15 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class CardData {
-  final String label;
-  final IconData icon;
-  final List<Color> colors;
-
-  CardData(this.label, this.icon, this.colors);
-}
-
 class _HomePageState extends State<HomePage> {
-  List<CardData> data = [
-    CardData("Pessoal", FluentIcons.person_32_filled, [
-      const Color(0xFF4b134f),
-      const Color(0xFFc94b4b),
-    ]),
-    CardData("Trabalho", FluentIcons.briefcase_32_filled, [
-      const Color(0xFF134E5E),
-      const Color(0xFF71B280),
-    ]),
-    CardData("Estudos", FluentIcons.book_default_28_filled, [
-      const Color(0xFF16222A),
-      const Color(0xFF3A6073),
-    ]),
-  ];
+  var dataRepository = CardDataRepository();
+  List<CardData> data = [];
+
+  @override
+  void initState() {
+    super.initState();
+    data = dataRepository.data;
+  }
 
   var _activeIndex = 0;
 
@@ -140,49 +130,92 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildCarouselItem(BuildContext context, int aux, int itemIndex) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Card(
-        elevation: 20,
-        color: Colors.white,
-        child: Container(
-          width: MediaQuery.of(context).size.width - 80,
-          height: (MediaQuery.of(context).size.width - 80) / 3 * 4,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: InkWell(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/card-detail',
+          arguments: data[itemIndex],
+        ),
+        child: Hero(
+          tag: data[itemIndex].label,
+          child: Card(
+            elevation: 20,
+            color: Colors.white,
+            child: Container(
+              width: MediaQuery.of(context).size.width - 80,
+              height: (MediaQuery.of(context).size.width - 80) / 3 * 4,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ShaderMask(
-                    blendMode: BlendMode.srcIn,
-                    shaderCallback: (Rect bounds) => LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: data[itemIndex].colors,
-                    ).createShader(bounds),
-                    child: Icon(
-                      data[itemIndex].icon,
-                      size: 32,
-                    ),
+                  Row(
+                    children: [
+                      ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (Rect bounds) => LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: data[itemIndex].colors,
+                        ).createShader(bounds),
+                        child: Icon(
+                          data[itemIndex].icon,
+                          size: 32,
+                        ),
+                      ),
+                      const Spacer(),
+                      const IconButton(
+                        onPressed: null,
+                        icon: Icon(FluentIcons.more_vertical_20_regular),
+                        color: Colors.grey,
+                      ),
+                    ],
                   ),
                   const Spacer(),
-                  const IconButton(
-                    onPressed: null,
-                    icon: Icon(FluentIcons.more_vertical_20_regular),
-                    color: Colors.grey,
+                  const Text(
+                    '9 tarefas',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF555555),
+                    ),
+                  ),
+                  Text(
+                    data[itemIndex].label,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: LinearProgressIndicator(
+                            value: 8 / 10,
+                            backgroundColor: Colors.grey[400],
+                            color: data[itemIndex].colors[0],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            '80%',
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xFF333333),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const Spacer(),
-              Text(
-                data[itemIndex].label,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

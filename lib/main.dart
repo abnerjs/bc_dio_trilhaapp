@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todoapp/pages/home/category/card_detail.dart';
 import 'package:todoapp/pages/home/home_main.dart';
 import 'package:todoapp/pages/login.dart';
 import 'package:todoapp/pages/profile/profile_main.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePageMain(title: 'Perfil'),
         '/settings': (context) =>
             const SettingsPageMain(title: 'Configurações'),
+        '/card-detail': (context) => const CardDetail(),
       },
     );
   }

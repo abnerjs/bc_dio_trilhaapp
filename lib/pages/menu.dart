@@ -90,7 +90,6 @@ class MenuPage extends StatelessWidget {
             ),
           ),
           onTap: () {
-            onSelectedItem(item);
             Navigator.pushNamed(context, item.url);
           },
         ),

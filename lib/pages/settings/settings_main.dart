@@ -13,7 +13,13 @@ class SettingsPageMain extends StatefulWidget {
 }
 
 class _SettingsPageMainState extends State<SettingsPageMain> {
-  MenuItem currentItem = MenuItems.perfil;
+  MenuItem currentItem = MenuItems.config;
+
+  @override
+  void initState() {
+    super.initState();
+    currentItem = MenuItems.config;
+  }
 
   @override
   Widget build(BuildContext context) => ZoomDrawer(

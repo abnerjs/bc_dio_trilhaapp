@@ -16,6 +16,12 @@ class _ProfilePageMainState extends State<ProfilePageMain> {
   MenuItem currentItem = MenuItems.perfil;
 
   @override
+  void initState() {
+    super.initState();
+    currentItem = MenuItems.perfil;
+  }
+
+  @override
   Widget build(BuildContext context) => ZoomDrawer(
         menuBackgroundColor: Colors.deepPurple,
         menuScreenWidth: double.infinity,
