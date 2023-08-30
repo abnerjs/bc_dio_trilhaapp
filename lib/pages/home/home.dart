@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:todoapp/widgets/menu.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,20 +13,42 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+class CardData {
+  final String label;
+  final IconData icon;
+  final List<Color> colors;
+
+  CardData(this.label, this.icon, this.colors);
+}
+
 class _HomePageState extends State<HomePage> {
+  List<CardData> data = [
+    CardData("Pessoal", FluentIcons.person_32_filled, [
+      const Color(0xFF4b134f),
+      const Color(0xFFc94b4b),
+    ]),
+    CardData("Trabalho", FluentIcons.briefcase_32_filled, [
+      const Color(0xFF134E5E),
+      const Color(0xFF71B280),
+    ]),
+    CardData("Estudos", FluentIcons.book_default_28_filled, [
+      const Color(0xFF16222A),
+      const Color(0xFF3A6073),
+    ]),
+  ];
+
+  var _activeIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          colors: [
-            Color(0xFF4b134f),
-            Color(0xFFc94b4b),
-          ],
+          colors: data[_activeIndex].colors,
         ),
-        borderRadius: BorderRadius.circular(10),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -87,59 +110,80 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 40, left: 40, right: 40),
-              child: Card(
-                elevation: 20,
-                color: Colors.white,
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 80,
-                  height: (MediaQuery.of(context).size.width - 80) / 3 * 4,
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          ShaderMask(
-                            blendMode: BlendMode.srcIn,
-                            shaderCallback: (Rect bounds) =>
-                                const LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Color(0xFF4b134f),
-                                Color(0xFFc94b4b),
-                              ],
-                            ).createShader(bounds),
-                            child: const Icon(
-                              FluentIcons.person_32_filled,
-                              size: 32,
-                            ),
-                          ),
-                          const Spacer(),
-                          const IconButton(
-                            onPressed: null,
-                            icon: Icon(FluentIcons.more_vertical_20_regular),
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Text(
-                        'Pessoal',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
+            Expanded(
+              flex: 2,
+              child: NotificationListener<ScrollUpdateNotification>(
+                onNotification: (notification) {
+                  setState(() {
+                    _activeIndex = notification.metrics.pixels ~/
+                        (MediaQuery.of(context).size.width - 80);
+                  });
+                  return true;
+                },
+                child: PageView.builder(
+                  itemCount: data.length,
+                  controller: PageController(viewportFraction: 0.8),
+                  itemBuilder: (BuildContext context, int itemIndex) {
+                    return _buildCarouselItem(context, 1, itemIndex);
+                  },
                 ),
               ),
             ),
+            const SizedBox(
+              height: 40,
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCarouselItem(BuildContext context, int aux, int itemIndex) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Card(
+        elevation: 20,
+        color: Colors.white,
+        child: Container(
+          width: MediaQuery.of(context).size.width - 80,
+          height: (MediaQuery.of(context).size.width - 80) / 3 * 4,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (Rect bounds) => LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: data[itemIndex].colors,
+                    ).createShader(bounds),
+                    child: Icon(
+                      data[itemIndex].icon,
+                      size: 32,
+                    ),
+                  ),
+                  const Spacer(),
+                  const IconButton(
+                    onPressed: null,
+                    icon: Icon(FluentIcons.more_vertical_20_regular),
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Text(
+                data[itemIndex].label,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -105,7 +105,7 @@ class MenuItems {
   static const config = MenuItem(
       title: 'Configurações',
       icon: FluentIcons.settings_16_regular,
-      url: '/home');
+      url: '/settings');
 
   static const all = <MenuItem>[
     home,

@@ -9,6 +9,6 @@ Um projeto feito em Flutter para o bootcamp da DIO.
 
 ## Prints
 <img src="/assets/login.png" alt="login" style="width:200px;"/>
-<img src="/assets/home.png" alt="home" style="width:200px;"/>
+<img src="/assets/home.gif" alt="home" style="width:200px;"/>
 <img src="/assets/menu.png" alt="menu" style="width:200px;"/>
 <img src="/assets/form.png" alt="form" style="width:200px;"/>   
