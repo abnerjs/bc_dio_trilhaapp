@@ -1,9 +1,10 @@
 import 'package:hive/hive.dart';
+import 'package:todoapp/model/settings.dart';
 
 class SettingsRepository {
-  late Box _box;
+  static late Box _box;
 
-  Future<SettingsRepository> init() async {
+  static Future<SettingsRepository> init() async {
     if (Hive.isBoxOpen('settings')) {
       _box = Hive.box('settings');
     } else {
@@ -14,19 +15,21 @@ class SettingsRepository {
 
   SettingsRepository._();
 
-  Future<void> setDarkMode(bool darkMode) async {
-    await _box.put('darkMode', darkMode);
+  void setSettings(Settings settings) {
+    _box.put('settings', {
+      'isNotificationEnabled': settings.isNotificationEnabled,
+      'isDarkMode': settings.isDarkMode,
+    });
   }
 
-  Future<bool> getDarkMode() async {
-    return _box.get('darkMode');
-  }
-
-  Future<void> setNotificationEnabled(bool notificationEnabled) async {
-    await _box.put('notificationEnabled', notificationEnabled);
-  }
-
-  Future<bool> getNotificationEnabled() async {
-    return _box.get('notificationEnabled');
+  Settings getSettings() {
+    var settings = _box.get('settings');
+    if (settings == null) {
+      return Settings.empty();
+    }
+    return Settings(
+      settings['isNotificationEnabled'],
+      settings['isDarkMode'],
+    );
   }
 }
