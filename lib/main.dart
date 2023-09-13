@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:todoapp/pages/home/category/card_detail.dart';
 import 'package:todoapp/pages/home/home_main.dart';
 import 'package:todoapp/pages/login.dart';
 import 'package:todoapp/pages/profile/profile_main.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todoapp/pages/settings/settings_main.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  path_provider.getApplicationDocumentsDirectory().then((dir) {
+    var documentPath = dir.path;
+    Hive.init(documentPath);
+  });
   runApp(const MyApp());
 }
 

@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:todoapp/repository/technologies.dart';
+import 'package:todoapp/services/app_storage.dart';
 import 'package:todoapp/utils/input_mask.dart';
-
-import '../../widgets/chip.dart';
+import 'package:todoapp/widgets/chip.dart';
 
 class FormProfile extends StatefulWidget {
   const FormProfile({super.key, required this.controller});
@@ -25,14 +25,44 @@ class _FormProfileState extends State<FormProfile> {
   var tecnologiasRepository = TecnologiaRepository();
   var niveis = [];
   var selectedOption = "";
-  var tecnologias = [];
-  var tecnologiasSelecionadas = [];
+  List<String> tecnologias = [];
+  List<String> tecnologiasSelecionadas = [];
+
+  AppStorage appStorage = AppStorage();
+
+  final String nameProfileKey = "name_profile";
+  final String birthdayProfileKey = "birthday_profile";
+  final String experienceProfileKey = "experience_profile";
+  final String technologiesProfileKey = "technologies_profile";
 
   @override
   void initState() {
     super.initState();
     niveis = ["Júnior", "Pleno", "Sênior"];
     tecnologias = tecnologiasRepository.tecnologias();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    var name = await appStorage.getNameProfile();
+    var birthday = await appStorage.getBirthdayProfile();
+    var level = await appStorage.getExperienceProfile();
+    var technologies = await appStorage.getTechnologiesProfile();
+
+    if (name != null) {
+      nomeController.text = name;
+    }
+    if (birthday != null) {
+      dateController.textController.text = birthday;
+    }
+    if (level != null) {
+      selectedOption = level;
+    }
+    if (technologies != null) {
+      tecnologiasSelecionadas = technologies;
+    }
+
+    setState(() {});
   }
 
   @override
@@ -49,6 +79,7 @@ class _FormProfileState extends State<FormProfile> {
                     margin: const EdgeInsets.only(top: 10),
                     height: 60,
                     child: TextField(
+                      controller: nomeController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(255, 240, 240, 240),
@@ -212,7 +243,7 @@ class _FormProfileState extends State<FormProfile> {
                         initialValue: tecnologiasSelecionadas,
                         listType: MultiSelectListType.CHIP,
                         onConfirm: (e) => setState(() {
-                          tecnologiasSelecionadas = e;
+                          tecnologiasSelecionadas = e.cast();
                         }),
                         chipDisplay: MultiSelectChipDisplay.none(),
                       ),
@@ -289,9 +320,9 @@ class _FormProfileState extends State<FormProfile> {
                     ),
                     Expanded(
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (nomeController.text.trim().length < 3 ||
-                              dataNascimento == null ||
+                              dateController.textController.text.length < 10 ||
                               selectedOption == "") {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -306,6 +337,15 @@ class _FormProfileState extends State<FormProfile> {
                             );
                             return;
                           } else {
+                            await appStorage
+                                .setNameProfile(nomeController.text.trim());
+                            await appStorage.setBirthdayProfile(
+                                dateController.textController.text);
+                            await appStorage
+                                .setExperienceProfile(selectedOption);
+                            await appStorage.setTechnologiesProfile(
+                                tecnologiasSelecionadas);
+
                             dateController.textController.text = "";
                             dataNascimento = null;
                             FocusManager.instance.primaryFocus?.unfocus();
