@@ -90,12 +90,39 @@ class _HomePageState extends State<HomePage> {
                 left: 48,
                 bottom: 10,
               ),
-              child: const Text(
-                "Categorias",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Categorias",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 25,
+                    height: 25,
+                    child: IconButton(
+                      padding: const EdgeInsets.only(left: 1),
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(
+                          const Color(0x50FFFFFF),
+                        ),
+                        backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.white.withOpacity(0.2),
+                        ),
+                        iconSize: MaterialStateProperty.all(18),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(
+                        FluentIcons.add_12_regular,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(

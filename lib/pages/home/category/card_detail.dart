@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +18,7 @@ class CardDetail extends StatefulWidget {
 class _CardDetailState extends State<CardDetail> {
   var tasklistRepository = TaskListRepository();
   List<Color> colors = [];
+  var rng = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -141,11 +144,12 @@ class _CardDetailState extends State<CardDetail> {
             ),
             Expanded(
               child: ListView.builder(
+                padding: const EdgeInsets.only(top: 30, bottom: 20),
                 itemCount: tasklistRepository.taskLists.length,
                 itemBuilder: (context, index) {
                   var taskList = tasklistRepository.taskLists[index];
                   var backgroundColor = generateBrighterMonochromaticPalette(
-                      args.colors, tasklistRepository.taskLists.length)[index];
+                      args.colors, 10)[rng.nextInt(10)];
 
                   return noteAdded(
                       taskList, backgroundColor, tasklistRepository);
@@ -201,15 +205,16 @@ Widget noteAdded(TaskList taskList, Color backgroundColor,
     TaskListRepository tasklistRepository) {
   return Dismissible(
     key: Key(taskList.id),
+    direction: DismissDirection.startToEnd,
     onDismissed: (direction) {
       tasklistRepository.removeTaskList(taskList);
     },
     child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
       ),
       child: Row(
         children: [

@@ -27,6 +27,21 @@ final cpfMask = InputMask(
   },
 );
 
+final cepMask = InputMask(
+  formatter: MaskTextInputFormatter(
+    mask: '#####-###',
+    filter: {'#': RegExp(r'[0-9]')},
+  ),
+  validator: (value) {
+    if (value!.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (value.length < 9) {
+      return 'CEP inválido';
+    }
+    return null;
+  },
+);
+
 final dateMask = InputMask(
   formatter: MaskTextInputFormatter(
     mask: '##/##/####',

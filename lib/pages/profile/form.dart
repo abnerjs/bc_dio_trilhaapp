@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:todoapp/model/via_cep.dart';
 import 'package:todoapp/repository/technologies.dart';
+import 'package:todoapp/repository/via_cep_repository.dart';
 import 'package:todoapp/services/app_storage.dart';
 import 'package:todoapp/utils/input_mask.dart';
 import 'package:todoapp/widgets/chip.dart';
@@ -27,6 +31,14 @@ class _FormProfileState extends State<FormProfile> {
   var selectedOption = "";
   List<String> tecnologias = [];
   List<String> tecnologiasSelecionadas = [];
+  var cepController = cepMask;
+  ViaCep viaCep = ViaCep();
+  ViaCepRepository viaCepRepository = ViaCepRepository();
+  var logradouro = TextEditingController(text: "");
+  var numero = TextEditingController(text: "");
+  var bairro = TextEditingController(text: "");
+  var cidade = TextEditingController(text: "");
+  var estado = TextEditingController(text: "");
 
   AppStorage appStorage = AppStorage();
 
@@ -84,6 +96,152 @@ class _FormProfileState extends State<FormProfile> {
                         filled: true,
                         fillColor: const Color.fromARGB(255, 240, 240, 240),
                         labelText: 'Nome',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(9),
+                        cepController.formatter,
+                      ],
+                      controller: cepController.textController,
+                      validator: cepController.validator,
+                      onChanged: (String value) async {
+                        if (value.length == 9) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          viaCep = await viaCepRepository.getCEP(value);
+                          logradouro.text = viaCep.logradouro ?? "";
+                          bairro.text = viaCep.bairro ?? "";
+                          cidade.text = viaCep.localidade ?? "";
+                          estado.text = viaCep.uf ?? "";
+                        } else {
+                          logradouro.text = "";
+                          numero.text = "";
+                          bairro.text = "";
+                          cidade.text = "";
+                          estado.text = "";
+                          setState(
+                            () {},
+                          );
+                        }
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'CEP',
+                        hintText: '00000-000',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextField(
+                      controller: logradouro,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'Logradouro',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextField(
+                      controller: numero,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'Número',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextField(
+                      controller: bairro,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'Bairro',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextField(
+                      controller: cidade,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'Cidade',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    height: 60,
+                    child: TextField(
+                      controller: estado,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 240, 240, 240),
+                        labelText: 'Estado',
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(8),
@@ -288,95 +446,103 @@ class _FormProfileState extends State<FormProfile> {
                       height: 10,
                     ),
                   ),
-                  Row(children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          dateController.textController.text = "";
-                          dataNascimento = null;
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          widget.controller.animateToPage(
-                            0,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          "Cancelar",
-                          style: GoogleFonts.poppins(
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () async {
-                          if (nomeController.text.trim().length < 3 ||
-                              dateController.textController.text.length < 10 ||
-                              selectedOption == "") {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  "Dados inválidos",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              dateController.textController.text = "";
+                              cepController.textController.text = "";
+                              dataNascimento = null;
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              widget.controller.animateToPage(
+                                0,
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                backgroundColor: Colors.deepPurple,
                               ),
-                            );
-                            return;
-                          } else {
-                            await appStorage
-                                .setNameProfile(nomeController.text.trim());
-                            await appStorage.setBirthdayProfile(
-                                dateController.textController.text);
-                            await appStorage
-                                .setExperienceProfile(selectedOption);
-                            await appStorage.setTechnologiesProfile(
-                                tecnologiasSelecionadas);
-
-                            dateController.textController.text = "";
-                            dataNascimento = null;
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            widget.controller.animateToPage(
-                              0,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Colors.deepPurple,
-                          ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              "Cancelar",
+                              style: GoogleFonts.poppins(
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 24,
+                              ),
                             ),
                           ),
                         ),
-                        child: Text(
-                          "Salvar",
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 24,
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () async {
+                              if (nomeController.text.trim().length < 3 ||
+                                  dateController.textController.text.length <
+                                      10 ||
+                                  selectedOption == "") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "Dados inválidos",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.deepPurple,
+                                  ),
+                                );
+                                return;
+                              } else {
+                                await appStorage
+                                    .setNameProfile(nomeController.text.trim());
+                                await appStorage.setBirthdayProfile(
+                                    dateController.textController.text);
+                                await appStorage
+                                    .setExperienceProfile(selectedOption);
+                                await appStorage.setTechnologiesProfile(
+                                    tecnologiasSelecionadas);
+
+                                dateController.textController.text = "";
+                                dataNascimento = null;
+                                cepController.textController.text = "";
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                widget.controller.animateToPage(
+                                  0,
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.deepPurple,
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "Salvar",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 24,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ]),
+                  ),
                 ],
               ),
             ),
